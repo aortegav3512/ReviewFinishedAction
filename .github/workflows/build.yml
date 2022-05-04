@@ -29,5 +29,5 @@ jobs:
       with:
         # Artifact name
         name: ReviewFinishedAction #.zip will be added automatically
-        path: ./bin/release/net5.0/*.*
+        path: ./bin/Release/net5.0/*.*
 
