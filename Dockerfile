@@ -1,16 +1,11 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+WORKDIR /src
+COPY ReviewFinishedAction/. .
+RUN dotnet restore "ReviewFinishedAction.csproj"
+RUN dotnet build "ReviewFinishedAction.csproj" -c Release
+RUN dotnet publish "ReviewFinishedAction.csproj" -c Release -o /app/publish
 
-COPY . .
-RUN dotnet publish ReviewFinishedAction.csproj -c Release -o out
-
-
-# Label as GitHub action
-LABEL com.github.actions.name="Review finished action"
-LABEL com.github.actions.description="Review finished action"
-LABEL com.github.actions.icon="sliders"
-LABEL com.github.actions.color="purple"
-
-# Relayer the .NET SDK, anew with the build output
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-COPY --from=build-env /out .
-ENTRYPOINT [ "dotnet", "ReviewFinishedAction.dll" ]
+FROM mcr.microsoft.com/dotnet/runtime:5.0-buster-slim
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "ReviewFinishedAction.dll"]
