@@ -87,6 +87,8 @@ namespace ReviewFinishedAction
             else
             {
                 Console.WriteLine($"Error getting response. Status code: {response.StatusCode}");
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Content: {content}");
             }
             return accessToken;
         }
