@@ -37,7 +37,7 @@ namespace ReviewFinishedAction
             var contentSerialized = JsonConvert.SerializeObject(addReviewDTO);
             var content = new StringContent(contentSerialized, Encoding.UTF8);
 
-            var url = Environment.GetEnvironmentVariable("API_URL");
+            var url = Environment.GetEnvironmentVariable("APIURL");
             Console.WriteLine($"URL: {url}");
 
             HttpClient httpClient = new HttpClient();
@@ -49,9 +49,9 @@ namespace ReviewFinishedAction
         private async static Task<string> GenerateToken()
         {
             string accessToken = "";
-            string tokenURL = Environment.GetEnvironmentVariable("TokenURL");
-            string username = Environment.GetEnvironmentVariable("TokenUsername");
-            string password = Environment.GetEnvironmentVariable("TokenPassword");
+            string tokenURL = Environment.GetEnvironmentVariable("TOKENURL");
+            string username = Environment.GetEnvironmentVariable("TOKENUSERNAME");
+            string password = Environment.GetEnvironmentVariable("TOKENPASSWORD");
 
             Console.WriteLine($"TokenUR:{tokenURL}, username:{username}");
 
