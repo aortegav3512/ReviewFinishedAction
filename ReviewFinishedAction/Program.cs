@@ -58,17 +58,18 @@ namespace ReviewFinishedAction
             string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(username + ":" + password));
 
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(tokenURL);
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
-            var bodyParameters = new Dictionary<string, string>();
-            bodyParameters.Add("grant_type", "client_credentials");
-            bodyParameters.Add("scope", "kong");
+            var postMessage = new Dictionary<string, string>();
+            postMessage.Add("grant_type", "client_credentials");
+            postMessage.Add("scope", "kong");
 
-            var contentSerialized = JsonConvert.SerializeObject(bodyParameters);
-            var content = new StringContent(contentSerialized, Encoding.UTF8);
-         
-            var response = await httpClient.PostAsync("", content);
+            var request = new HttpRequestMessage(HttpMethod.Post, tokenURL)
+            {
+                Content = new FormUrlEncodedContent(postMessage)
+            };
+
+            var response = await httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 Console.WriteLine($"Token obtained...");
