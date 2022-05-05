@@ -14,7 +14,7 @@ namespace ReviewFinishedAction
         async static Task Main(string[] args)
         {
             Console.WriteLine("Starting action...");            
-            string version = Environment.GetEnvironmentVariable("BRANCH");
+            string version = Environment.GetEnvironmentVariable("GITHUB_HEAD_REF");
             string repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY");
             string productId = repository.Substring(repository.LastIndexOf("/") + 1);
 
@@ -53,7 +53,7 @@ namespace ReviewFinishedAction
             string username = Environment.GetEnvironmentVariable("TOKENUSERNAME");
             string password = Environment.GetEnvironmentVariable("TOKENPASSWORD");
 
-            Console.WriteLine($"TokenUR:{tokenURL}, username:{username}");
+            Console.WriteLine($"TokenURL: {tokenURL}, username:{username}");
 
             string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(username + ":" + password));
 
