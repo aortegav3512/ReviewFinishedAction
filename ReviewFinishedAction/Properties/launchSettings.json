@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ReviewFinishedAction": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
